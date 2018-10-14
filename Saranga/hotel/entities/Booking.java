@@ -131,7 +131,7 @@ public class Booking {
 	public List<ServiceCharge> getCharges() {
 		// debug
                 for (ServiceCharge sc : charges) {                          
-                                System.out.println("----DEBUG---> sc.getCost() ----> : "+sc.getCost());
+                                System.out.println("----DEBUG---> Booking.java -> sc.getCost() ----> : "+sc.getCost());
                 }
 		
 		return Collections.unmodifiableList(charges);
@@ -143,7 +143,7 @@ public class Booking {
 	}
 
 
-	public void addServiceCharge(ServiceType serviceType, double cosst) {
+	public void addServiceCharge(ServiceType serviceType, double cost) {    // corrected cosst to cost
 		charges.add(new ServiceCharge(serviceType, cost));
 	}
 
