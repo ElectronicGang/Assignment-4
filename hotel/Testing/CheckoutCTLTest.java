@@ -26,7 +26,7 @@ public class CheckoutCTLTest {
     public CheckoutCTLTest() {
     }
     
-    @Test
+   @Test
     public void testRoomIdEntered() {
         System.out.println("roomIdEntered");
         Long confirmationNumber = 0L;
@@ -36,21 +36,19 @@ public class CheckoutCTLTest {
         Guest guest =hotel.registerGuest("Sandy", "186 Wright st", 0451234563);// create a guest object
         CreditCard creditCard = new CreditCard(CreditCardType.MASTERCARD,4217,415); // create a credit card object
         hotel.findAvailableRoom(RoomType.SINGLE, new Date(2018, 11, 05), 7);
-        confirmationNumber = hotel.book(room, guest, new Date(2018, 11, 05), 7, 1, creditCard); // generate a confirmation number through booking
+        double costOfBooking = 100*7;
+        confirmationNumber = hotel.book(room, guest, new Date(2018, 11, 05), 7, 1, creditCard,costOfBooking); // generate a confirmation number through booking
         hotel.checkin(confirmationNumber);// execute guest check in to room.
         int roomId = 201;
-        double costOfBooking = 100*7;
         
         CheckoutCTL instance = new CheckoutCTL(hotel);
         instance.run();
        instance.roomIdEntered(roomId);
         instance.chargesAccepted(true);
         instance.creditDetailsEntered(CreditCardType.VISA, 4217, 415);
-        // TODO review the generated test code and remove the default call to fail.
-        assertEquals("Cost", costOfBooking, instance.getTotal());
-       System.out.println(costOfBooking);
+        
+         assertEquals(costOfBooking, instance.getTotal(), 0.0);
     }
-
     
     
     
