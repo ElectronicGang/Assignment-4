@@ -34,7 +34,7 @@ public class RecordServiceCTLTest {
     /**
      * Test of roomNumberEntered method, of class RecordServiceCTL.
      */
-    @Test
+     @Test
     public void testRoomNumberEntered() {
         System.out.println("roomNumberEntered");
         Long confirmationNumber = 0L;
@@ -44,7 +44,8 @@ public class RecordServiceCTLTest {
         Guest guest =hotel.registerGuest("Sandy", "186 Wright st", 0451234563);// create a guest object
         CreditCard creditCard = new CreditCard(CreditCardType.MASTERCARD,4217,415); // create a credit card object
         hotel.findAvailableRoom(RoomType.SINGLE, new Date(2018, 11, 05), 7);
-        confirmationNumber = hotel.book(room, guest, new Date(2018, 11, 05), 7, 1, creditCard); // generate a confirmation number through booking
+        double costOfBooking = 100*7;
+        confirmationNumber = hotel.book(room, guest, new Date(2018, 11, 05), 7, 1, creditCard,costOfBooking); // generate a confirmation number through booking
         hotel.checkin(confirmationNumber);// execute guest check in to room.
         int roomId = 201;
       
@@ -58,14 +59,14 @@ public class RecordServiceCTLTest {
         recordService.roomNumberEntered(roomId);// pass room id to find booking
         recordService.serviceDetailsEntered(ServiceType.BAR_FRIDGE, 150.0);// add extra service for the booking
         
-        booking = hotel.findActiveBookingByRoomId(roomId);
+         booking = hotel.findActiveBookingByRoomId(roomId);
         boolean roomAvailable = true;
         if(booking != null){
             roomAvailable = false;
         }
+        
         assertTrue("Room Status", roomAvailable);
     }
-
     
 
   
