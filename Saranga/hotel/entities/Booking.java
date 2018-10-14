@@ -31,7 +31,7 @@ public class Booking {
 	public Booking(Guest guest, Room room, 
 			Date arrivalDate, int stayLength, 
 			int numberOfOccupants, 
-			CreditCard creditCard) {
+			CreditCard creditCardint pcost) {  //  debug  add pcost parameter
 		
 		this.guest = guest;
 		this.room = room;
@@ -42,7 +42,13 @@ public class Booking {
 		this.creditCard = creditCard;
 		this.charges = new ArrayList<>();
 		this.state = State.PENDING;
+		this.cost = pcost;                  //debug  add new line
 	}
+        
+        public int getCost()            // debug add getter metod
+        {
+            return this.cost;
+        }
 
 	
 	private long generateConfirmationNumber(int roomId, Date arrivalDate) {
