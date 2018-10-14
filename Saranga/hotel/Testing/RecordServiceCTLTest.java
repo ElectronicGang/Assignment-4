@@ -20,10 +20,6 @@ import java.util.Date;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author Dilan
- */
 public class RecordServiceCTLTest {
     
     Booking booking;//instance for find bookings
