@@ -129,6 +129,11 @@ public class Booking {
 
 
 	public List<ServiceCharge> getCharges() {
+		// debug
+                for (ServiceCharge sc : charges) {                          
+                                System.out.println("----DEBUG---> sc.getCost() ----> : "+sc.getCost());
+                }
+		
 		return Collections.unmodifiableList(charges);
 	}
 
