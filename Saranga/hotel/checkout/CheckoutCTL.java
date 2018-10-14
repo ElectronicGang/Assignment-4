@@ -66,6 +66,10 @@ public class CheckoutCTL {
 			total = 0;
 			List<ServiceCharge> charges = booking.getCharges();
 			for (ServiceCharge sc : charges) {
+				
+				System.out.println("----DEBUG---> checkOut.java -> sc.getType() ----> : " + sc.getType()); // debug
+                                System.out.println("----DEBUG---> checkOut.java -> sc.getCost() ----> : " + sc.getCost()); // debug
+				
 				total += sc.getCost();
 				String chargeStr = String.format("    %-12s:%10s", 
 						sc.getDescription(), String.format("$%.2f", sc.getCost()));
