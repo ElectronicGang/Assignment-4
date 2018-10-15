@@ -39,13 +39,13 @@ public class RecordServiceCTLTest {
     public void testRoomNumberEntered() {
         System.out.println("roomNumberEntered");
         Long confirmationNumber = 0L;
-        Hotel hotel = new Hotel();// create hotel instance to make booking
-        Room room = new Room(201,RoomType.SINGLE); //create a room instance for booking
+        Hotel hotel = new Hotel();// Create an instance of hotel for booking purposes
+        Room room = new Room(201,RoomType.SINGLE); //create a room instance 
         hotel.addRoom(RoomType.SINGLE, 201);
-        Guest guest =hotel.registerGuest("Sandy", "186 Wright st", 0451234563);// create a guest object
-        CreditCard creditCard = new CreditCard(CreditCardType.MASTERCARD,4217,415); // create a credit card object
-        hotel.findAvailableRoom(RoomType.SINGLE, new Date(2018, 11, 05), 7);
-        confirmationNumber = hotel.book(room, guest, new Date(2018, 11, 05), 7, 1, creditCard); // generate a confirmation number through booking
+        Guest guest =hotel.registerGuest("Recep", "3/139 Cairns Road", 0451234563);// creation of a guest object
+        CreditCard creditCard = new CreditCard(CreditCardType.MASTERCARD,40179545,275); // creation of a credit card object
+        hotel.findAvailableRoom(RoomType.SINGLE, new Date(2018, 12, 06), 3);
+        confirmationNumber = hotel.book(room, guest, new Date(2018, 12, 06), 3, 1, creditCard); // generate a confirmation number through booking
         hotel.checkin(confirmationNumber);// execute guest check in to room.
         int roomId = 201;
       
@@ -53,7 +53,7 @@ public class RecordServiceCTLTest {
         instance.run();
        instance.roomIdEntered(roomId);
         instance.chargesAccepted(true);
-        instance.creditDetailsEntered(CreditCardType.VISA, 4217, 415);
+        instance.creditDetailsEntered(CreditCardType.VISA, 40179545, 275);
         
         RecordServiceCTL recordService = new RecordServiceCTL(hotel); // create an instance of record service to add service
         recordService.roomNumberEntered(roomId);// pass room id to find booking
