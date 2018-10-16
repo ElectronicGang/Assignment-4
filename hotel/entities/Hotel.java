@@ -87,9 +87,9 @@ public class Hotel {
 	
 	public long book(Room room, Guest guest, 
 			Date arrivalDate, int stayLength, int occupantNumber,
-			CreditCard creditCard) {
+			CreditCard creditCard, double cost) {
 		
-		Booking booking = room.book(guest, arrivalDate, stayLength, occupantNumber, creditCard);
+		Booking booking = room.book(guest, arrivalDate,room, stayLength, occupantNumber, creditCard, cost);
 		long confirmationNumber = booking.getConfirmationNumber();
 		bookingsByConfirmationNumber.put(confirmationNumber, booking);
 		return confirmationNumber;		
@@ -103,7 +103,6 @@ public class Hotel {
 			throw new RuntimeException(message);
 		}
 		int roomId = booking.getRoomId();
-		
 		booking.checkIn();
 		activeBookingsByRoomId.put(roomId, booking);
 	}
@@ -126,6 +125,7 @@ public class Hotel {
 			throw new RuntimeException(mesg);
 		}
 		booking.checkOut();
+                activeBookingsByRoomId.remove(roomId, booking);
 	}
 
 

@@ -30,9 +30,9 @@ public class CheckoutCTL {
 
 	
 	public void run() {
-		IOUtils.trace("BookingCTL: run");
+		//IOUtils.trace("BookingCTL: run");
 		state = State.ROOM;
-		checkoutUI.run();
+		//checkoutUI.run();
 	}
 
 	
@@ -41,6 +41,7 @@ public class CheckoutCTL {
 			String mesg = String.format("CheckoutCTL: roomIdEntered : bad state : %s", state);
 			throw new RuntimeException(mesg);
 		}
+                
 		this.roomId = roomId;
 		Booking booking = hotel.findActiveBookingByRoomId(roomId);
 		if (booking == null) {
@@ -63,7 +64,7 @@ public class CheckoutCTL {
 			
 			sb.append("Charges:\n");
 			
-			total = 0;
+			total = booking.getCost();
 			List<ServiceCharge> charges = booking.getCharges();
 			for (ServiceCharge sc : charges) {
 				total += sc.getCost();
@@ -71,7 +72,7 @@ public class CheckoutCTL {
 						sc.getDescription(), String.format("$%.2f", sc.getCost()));
 				sb.append(chargeStr).append("\n");			
 			}
-			sb.append(String.format("Total: $%.2f\n", total));
+			sb.append(String.format("Total: $%.2f\n", getTotal()));
 			String mesg = sb.toString();
 			checkoutUI.displayMessage(mesg);
 			state = State.ACCEPT;
@@ -103,11 +104,11 @@ public class CheckoutCTL {
 			throw new RuntimeException(mesg);
 		}
 		CreditCard card = new CreditCard(type, number, ccv);
-		boolean approved = CreditAuthorizer.getInstance().authorize(card, total);
+		boolean approved = CreditAuthorizer.getInstance().authorize(card, getTotal());
 		if (!approved) {
 			String outputStr = String.format(
 					"%s credit card number %d was not authorized for $%.2f",
-					type.getVendor(), number, total);
+					type.getVendor(), number, getTotal());
 					
 			checkoutUI.displayMessage(outputStr);
 			cancel();
@@ -116,7 +117,7 @@ public class CheckoutCTL {
 			hotel.checkout(roomId);
 			String outputStr = String.format(
 					"%s credit card number %d was debited $%.2f",
-					card.getType().getVendor(), card.getNumber(), total);
+					card.getType().getVendor(), card.getNumber(), getTotal());
 			checkoutUI.displayMessage(outputStr);
 			state = State.COMPLETED;
 			checkoutUI.setState(CheckoutUI.State.COMPLETED);
@@ -135,6 +136,11 @@ public class CheckoutCTL {
 		checkoutUI.displayMessage("Checking out completed");
 	}
 
-
+       /**
+     * @return the total
+     */
+    public double getTotal() {
+        return total;
+    }
 
 }
